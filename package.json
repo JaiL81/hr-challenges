@@ -19,6 +19,7 @@
   "dependencies": {
     "big-integer": "^1.6.26",
     "cheerio": "^1.0.0-rc.2",
+    "fs": "0.0.1-security",
     "request": "^2.88.0",
     "s": "^0.1.1"
   }

@@ -1,16 +1,32 @@
-var request = require("request");
 var cheerio = require("cheerio");
+var fs = require("fs");
 
-request({
-  uri: "http://madivachallenge.appspot.com/colors/121621",
-}, function(error, response, body) {
-  var $ = cheerio.load(body);
-console.log($("p"))
-  $(".row.quijote p").each(function() {
-    var link = $(this).text();
-   // var text = link.text();
-    //var href = link.attr("href");
+var $ = cheerio.load(fs.readFileSync("quijote.html"));
 
-    console.log(link);
-  });
+var parrafos = $(".row.quijote p")
+  .map(function() {
+    return $(this).text();
+  })
+  .get();
+
+parrafos = parrafos.map(parrafo => parrafo.replace(/[^a-zA-Záéíóú ]/g, ""));
+var palabras = parrafos
+  .join(" ")
+  .split(" ")
+  .map(palabra => palabra.toLowerCase());
+console.log(palabras.length);
+
+var diccionario = palabras.reduce((palabrasMap, palabra) => {
+  if (palabrasMap.has(palabra)) {
+    var repeticiones = palabrasMap.get(palabra) + 1;
+    palabrasMap.set(palabra, repeticiones);
+  } else {
+    palabrasMap.set(palabra, 1);
+  }
+  return palabrasMap;
+}, new Map());
+diccionario.forEach((value, key) => {
+  if (value === 1169) {
+    console.log(key);
+  }
 });
