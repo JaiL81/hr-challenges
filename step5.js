@@ -6,11 +6,8 @@ for (var i = 50; i < 100; i++) {
     request.get(url, (error, response, body) => {
         var $ = cheerio.load(body);
         var bienvenido = $('h4').text()
-        //console.log(bienvenido)
-        if (bienvenido !== 'Bienvenido al Madiva Challenge,') {
-            console.log(url);    
+        if (bienvenido !== 'Bienvenido al Madiva Challenge,') { 
             console.log(response)        
-            console.log(i);
         } 
         
     })
